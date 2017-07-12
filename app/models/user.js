@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
+import db from '../configurations/dbConfig';
 
 let usernameValidator = (username) => {
-  let user = mongoose.model('user', userSchema);
-  user.findOne({ 'username': this.username }, 'username',(err, user) => {
+  User.findOne({ 'username': this.username }, 'username',(err, user) => {
     if (err)
       return console.error(err);
     if(user){
@@ -16,7 +16,7 @@ let Schema = mongoose.Schema;
 let userSchema = new Schema({
   name        : { type: String, required: true},
   address     : { type: String, required: true},
-  username    : { type: String, required: true, unique: true, validate: usernameValidator()},
+  username    : { type: String, required: true, unique: true, validate: usernameValidator},
   password    : { type: String, required: true, minlength: 4, maxlength: 20},
   admin       : { type: Boolean, default: false},
   cart        : {
@@ -25,7 +25,7 @@ let userSchema = new Schema({
                 quantity: Number
               }],
     totalCost : { type: Number, default: 0},
-    state     : { type: String, enum: ['empty', 'loaded', 'ordered']}
+    state     : { type: String, enum: ['empty', 'loaded']}
   },
   dateCreated : Date
 });
@@ -42,7 +42,7 @@ userSchema.pre('save', (next) => {
   next();
 });
 
-let user = mongoose.model('user', userSchema);
+let User = db.model('User', userSchema);
 
-export {user};
+export {User};
 

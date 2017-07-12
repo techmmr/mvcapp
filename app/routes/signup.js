@@ -1,4 +1,8 @@
+const express = require('express');
+const router = express.Router();
 import * as signup from '../controllers/signup';
 
-app.post('/signup', signup.signup);
-app.get('/signup', signup.renderSignup);
+router.post('/signup', signup.signup);
+router.get('/signup', signup.renderSignup);
+
+export {router};

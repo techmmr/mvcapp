@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+import db from '../configurations/dbConfig';
 
 let Schema = mongoose.Schema;
 
@@ -7,6 +8,6 @@ let orderSchema = new Schema({
   state         : { type: String, enum: ['confirmed', 'paid', 'delivered']},
 });
 
-let order = mongoose.model('order', orderSchema);
+let Order = db.model('Order', orderSchema);
 
-export {order} ;
+export {Order} ;

@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
+import db from '../configurations/dbConfig';
 
 let Schema = mongoose.Schema;
+
 let itemSchema = new Schema({
   name      : { type: String, required: true},
   cost      : { type: Number, required: true, min: 0},
@@ -8,6 +10,6 @@ let itemSchema = new Schema({
   inventory : { type: Number, default: 0, min:0},
 });
 
-let item = mongoose.model('Item', itemSchema);
+let Item = db.model('Item', itemSchema);
 
-export {item};
+export {Item};

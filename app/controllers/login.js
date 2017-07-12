@@ -1,13 +1,14 @@
 const passwordHash = require('password-hash');
-import {user} from '../models/user';
+import {User} from '../models/user';
 
 export const login = (req, res)=> {
-  user.find({ username: req.body.username}, (err, user) => {
+  User.find({ username: req.body.username}, (err, user) => {
     if(err)
       console.error(err);
     if(user){
       if(passwordHash.verify(req.body.password, user.password)){
         res.cookie('loginId', user.id, {httpOnly: true, secure: true});
+        res.cookie('loggedIn', true, {httpOnly: true, secure: true});
         res.render('pages/home');
       }
     }

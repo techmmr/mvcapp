@@ -1,9 +1,8 @@
-const mongoose = require('mongoose');
 const passwordHash = require('password-hash');
-import {user} from '../models/user';
+import {User} from '../models/user';
 
 export const signup = (req, res)=> {
-  let newUser = new user({
+  let newUser = new User({
     name        : req.body.name,
     address     : req.body.address,
     username    : req.body.username,
