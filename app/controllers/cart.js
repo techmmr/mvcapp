@@ -1,4 +1,5 @@
 import {User} from '../models/user';
+import {Item} from '../models/item';
 import {Order} from '../models/order';
 
 export const createOrder = (req, res)=> {
@@ -8,6 +9,15 @@ export const createOrder = (req, res)=> {
         if (err)
           console.error(err);
         console.log('New order Confirmed w.r.t user : ', user);
+
+        //remove items from inventory
+        user.cart.items.forEach((item) => {
+          Item.update({id: item.itemId}, {$inc: {'item.inventory': -item.quantity}}, {runValidators: true}, (err, raw) => {
+            if(err)
+              console.error(err);
+            console.log('DB Response : ', raw);
+          })
+        });
 
         //order contents are available here(in user.cart), since no transaction implementation is to be done as of now, dumping the data.
 
@@ -33,19 +43,19 @@ export const createOrder = (req, res)=> {
           if (err)
             console.error(err);
         });
-        res.render('pages/cart', user);
+        res.redirect('/cart', {user: user});
       });
     }
     else
-      res.render('pages/login');
+      res.redirect('/login');
 };
 
 export const renderCart = (req, res) => {
   if(req.signedCookies['loggedIn']){
     User.findById(req.signedCookies['loginId'], (err, user) => {
-      res.render('pages/cart', user);
+      res.render('pages/cart', {cart: user.cart});
     });
   }
   else
-    res.render('pages/login')
+    res.redirect('pages/login')
 };

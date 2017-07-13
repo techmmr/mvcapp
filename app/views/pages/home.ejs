@@ -1,20 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <% include ../partials/head %>
+  <% include ../partials/head.ejs %>
 </head>
 <body class="container">
 
 <header>
-  <% include ../partials/header %>
+  <% include ../partials/header.ejs %>
 </header>
 
 <main>
     <h2>Home</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Cost</th>
+            <th>Availability</th>
+            <th>Vendor</th>
+            <th>Add to Cart</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% items.forEach((item) => { %>
+        <tr>
+            <td><%= item.name %></td>
+            <td><%= item.cost %></td>
+            <td><%= item.inventory %></td>
+            <td><%= item.vendor %></td>
+            <td>
+                <form>
+                    <input type="hidden" name="itemId" value=<%= item.id %> >
+                    <input type="number" name="quantity">
+                    <input name="Add To Cart" id="add" value="add" type="submit" />
+                </form>
+            </td>
+        </tr>
+        <% }); %>
+        </tbody>
+    </table>
 </main>
 
 <footer>
-  <% include ../partials/footer %>
+  <% include ../partials/footer.ejs %>
 </footer>
 
 </body>

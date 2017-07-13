@@ -1,20 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <% include ../partials/head %>
+  <% include ../partials/head.ejs %>
 </head>
 <body class="container">
 
 <header>
-  <% include ../partials/header %>
+  <% include ../partials/header.ejs %>
 </header>
 
 <main>
     <h2>Signup</h2>
+    <form>
+        Full Name:  <input type="text" name="name"><br>
+        Username :  <input type="text" name="username"><br>
+        Password :  <input type="password" name="password"><br>
+        Address  :  <input type="text" name="address"><br>
+        <input type="submit" value="Sign up" name="submit">
+    </form>
 </main>
 
 <footer>
-  <% include ../partials/footer %>
+  <% include ../partials/footer.ejs %>
 </footer>
 
 </body>

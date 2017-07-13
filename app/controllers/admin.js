@@ -13,14 +13,16 @@ export const addItem = (req, res) => {
         return console.error(err);
     });
     console.log('new item created :', req.body.name);
-    res.render('pages/home');
+    res.redirect('/home');
   }
   else
-    res.render('pages/login');
+    res.redirect('/login');
 };
 
 export const renderAdmin = (req, res) => {
   if(req.signedCookies['loggedIn'] && req.signedCookies['isAdmin']) {
     res.render('pages/admin');
   }
+  else
+    res.redirect('/login');
 };

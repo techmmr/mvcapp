@@ -20,18 +20,19 @@ export const addToCart = (req, res)=> {
         Item.find({}, (err, items) => {
           if(err)
             console.error(err);
-          res.render('pages/home', items, user);
+          res.render('pages/home', {items: items});
         });
       });
   }
   else
-    res.render('pages/login');
+    res.redirect('/login');
 };
 
 export const renderHome = (req, res) => {
   Item.find({}, (err, items) => {
     if (err)
       console.error(err);
-    res.render('pages/home', items);
+    if(items)
+      res.render('pages/home', {items: items});
   });
 };
