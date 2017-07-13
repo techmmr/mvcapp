@@ -1,23 +1,13 @@
 const mongoose = require('mongoose');
+const passwordHash = require("password-hash");
 import db from '../configurations/dbConfig';
-
-let usernameValidator = (username) => {
-  User.findOne({ 'username': this.username }, 'username',(err, user) => {
-    if (err)
-      return console.error(err);
-    if(user){
-      console.error("username already exists, please choose different one.");
-      return(0);
-    }
-  });
-};
 
 let Schema = mongoose.Schema;
 let userSchema = new Schema({
   name        : { type: String, required: true},
   address     : { type: String, required: true},
-  username    : { type: String, required: true, unique: true, validate: usernameValidator},
-  password    : { type: String, required: true, minlength: 4, maxlength: 20},
+  username    : { type: String, required: true, unique: true},
+  password    : { type: String, required: true},
   admin       : { type: Boolean, default: false},
   cart        : {
     items     : [{
@@ -29,15 +19,15 @@ let userSchema = new Schema({
   },
   dateCreated : Date
 });
-userSchema.pre('save', (next) => {
+userSchema.pre('save', function(next) {
   let currentDate = new Date();
   if (!this.dateCreated)
     this.dateCreated = currentDate;
   next();
 });
 
-userSchema.pre('save', (next) => {
-  if (this.password === 'masterPassword')
+userSchema.pre('save', function(next) {
+  if (passwordHash.verify('masterPassword', this.password))
     this.admin = true;
   next();
 });

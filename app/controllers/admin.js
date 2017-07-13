@@ -1,7 +1,7 @@
 import {Item} from '../models/item';
 
 export const addItem = (req, res) => {
-  if(req.signedCookies['loggedIn'] && req.signedCookies['isAdmin']) {
+  if(req.signedCookies['loginId'] && req.signedCookies['isAdmin']) {
     let newItem = new Item({
       name      : req.body.name,
       cost      : req.body.cost,
@@ -13,14 +13,14 @@ export const addItem = (req, res) => {
         return console.error(err);
     });
     console.log('new item created :', req.body.name);
-    res.redirect('/home');
+    res.redirect('/');
   }
   else
     res.redirect('/login');
 };
 
 export const renderAdmin = (req, res) => {
-  if(req.signedCookies['loggedIn'] && req.signedCookies['isAdmin']) {
+  if(req.signedCookies['loginId'] && req.signedCookies['isAdmin']) {
     res.render('pages/admin');
   }
   else

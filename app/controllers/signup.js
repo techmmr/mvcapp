@@ -16,9 +16,9 @@ export const signup = (req, res)=> {
   newUser.save((err) => {
     if(err)
       return console.error(err);
+    console.log('new user created :' + req.body.name);
   });
-  console.log('new user created :' + req.body.name);
-  res.redirect('/home');
+  res.redirect('/');
 };
 
 export const renderSignup = (req, res) => {

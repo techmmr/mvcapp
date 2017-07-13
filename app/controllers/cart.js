@@ -3,7 +3,7 @@ import {Item} from '../models/item';
 import {Order} from '../models/order';
 
 export const createOrder = (req, res)=> {
-    if(req.signedCookies['loggedIn']) {
+    if(req.signedCookies['loginId']) {
       const userId = req.signedCookies['loginId'];
       User.findById(userId, (err, user) => {
         if (err)
@@ -51,11 +51,18 @@ export const createOrder = (req, res)=> {
 };
 
 export const renderCart = (req, res) => {
-  if(req.signedCookies['loggedIn']){
+  if(req.signedCookies['loginId']){
     User.findById(req.signedCookies['loginId'], (err, user) => {
-      res.render('pages/cart', {cart: user.cart});
+      user.cart.items.forEach((itemElement) => {
+        Item.findById(itemElement.itemId, (err, item) => {
+          if(err)
+            console.error(err);
+          itemElement.name = item.name;
+          res.render('pages/cart', {cart: user.cart});
+        });
+      });
     });
   }
   else
-    res.redirect('pages/login')
+    res.redirect('/login')
 };

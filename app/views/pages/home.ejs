@@ -29,7 +29,7 @@
             <td><%= item.inventory %></td>
             <td><%= item.vendor %></td>
             <td>
-                <form>
+                <form method="post">
                     <input type="hidden" name="itemId" value=<%= item.id %> >
                     <input type="number" name="quantity">
                     <input name="Add To Cart" id="add" value="add" type="submit" />

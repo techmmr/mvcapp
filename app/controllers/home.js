@@ -1,9 +1,9 @@
 import {User} from '../models/user';
 import {Item} from '../models/item';
-// needs itemId and quantity in post request
+
 export const addToCart = (req, res)=> {
   let itemCost = 0;
-  if(req.signedCookies['loggedIn']) {
+  if(req.signedCookies['loginId']) {
     let userId = req.signedCookies['loginId'];
     Item.findById(req.body.itemId, (err, item) => {
       if(err)
@@ -12,7 +12,7 @@ export const addToCart = (req, res)=> {
     });
     User.findByIdAndUpdate(
       userId,
-      {$push: {'cart.items.itemId': req.body.itemId, 'cart.items.quantity': req.body.quantity}, $inc:  {'cart.totalCost': itemCost*req.body.quantity}, 'cart.state': 'loaded'},
+      {$push: {'cart.items': {'itemId': req.body.itemId, 'quantity': req.body.quantity}}, $inc:  {'cart.totalCost': itemCost*req.body.quantity}, 'cart.state': 'loaded'},
       {runValidators: true},
       (err, user) => {
         if (err)
