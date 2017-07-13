@@ -7,8 +7,11 @@ export const login = (req, res)=> {
       console.error(err);
     if(user){
       if(passwordHash.verify(req.body.password, user.password)){
-        res.cookie('loginId', user.id, {httpOnly: true, secure: true});
-        res.cookie('loggedIn', true, {httpOnly: true, secure: true});
+        res.cookie('loginId', user.id, {httpOnly: true, secure: true, signed: true});
+        res.cookie('loggedIn', true, {httpOnly: true, secure: true, signed: true});
+        if(user.admin){
+          res.cookie('isAdmin', true, {httpOnly: true, secure: true, signed: true});
+        }
         res.render('pages/home');
       }
     }

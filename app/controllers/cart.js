@@ -2,8 +2,8 @@ import {User} from '../models/user';
 import {Order} from '../models/order';
 
 export const createOrder = (req, res)=> {
-    if(req.cookies.loggedIn) {
-      const userId = req.cookies.loginId;
+    if(req.signedCookies['loggedIn']) {
+      const userId = req.signedCookies['loginId'];
       User.findById(userId, (err, user) => {
         if (err)
           console.error(err);
@@ -41,8 +41,8 @@ export const createOrder = (req, res)=> {
 };
 
 export const renderCart = (req, res) => {
-  if(req.cookies.loggedIn){
-    User.findById(req.cookies.loginId, (err, user) => {
+  if(req.signedCookies['loggedIn']){
+    User.findById(req.signedCookies['loginId'], (err, user) => {
       res.render('pages/cart', user);
     });
   }

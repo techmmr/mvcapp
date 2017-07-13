@@ -1,10 +1,10 @@
 import {User} from '../models/user';
-import {Item} from '../models/items';
+import {Item} from '../models/item';
 // needs itemId and quantity in post request
 export const addToCart = (req, res)=> {
   let itemCost = 0;
-  if(req.cookies.loggedIn) {
-    let userId = req.cookies.loginId;
+  if(req.signedCookies['loggedIn']) {
+    let userId = req.signedCookies['loginId'];
     Item.findById(req.body.itemId, (err, item) => {
       if(err)
         console.error(err);

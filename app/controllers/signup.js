@@ -17,7 +17,7 @@ export const signup = (req, res)=> {
     if(err)
       return console.error(err);
   });
-  console.log('new user created as : '+userData);
+  console.log('new user created as : ' + userData);
   res.render('pages/home');
 };
 
