@@ -11,6 +11,7 @@ let userSchema = new Schema({
   admin       : { type: Boolean, default: false},
   cart        : {
     items     : [{
+                name    : String,
                 itemId  : String,
                 quantity: Number
               }],

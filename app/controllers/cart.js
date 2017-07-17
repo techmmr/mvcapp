@@ -8,30 +8,27 @@ export const createOrder = (req, res)=> {
       User.findById(userId, (err, user) => {
         if (err)
           console.error(err);
-        console.log('New order Confirmed w.r.t user : ', user);
+        console.log('New order Confirmed w.r.t user : ', user.name);
 
         //remove items from inventory
         user.cart.items.forEach((item) => {
-          Item.update({id: item.itemId}, {$inc: {'item.inventory': -item.quantity}}, {runValidators: true}, (err, raw) => {
+          Item.findByIdAndUpdate(item.itemId, {$inc: {'item.inventory': -item.quantity}}, (err, result) => {
             if(err)
               console.error(err);
-            console.log('DB Response : ', raw);
+            console.log('Items Updated, DB Response : ', result);
           })
         });
 
         //order contents are available here(in user.cart), since no transaction implementation is to be done as of now, dumping the data.
 
-        User.update({id: userId}, {
+        User.findByIdAndUpdate(userId, {
           $set: {
-            'cart.items': [],
-            'cart.quantity': [],
-            'cart.totalCost': 0,
-            'cart.state': 'empty'
-          }
-        }, {runValidators: true}, (err, raw) => {
+            cart : {items: [], quantity: [], totalCost: 0, state: 'empty'}}
+            },
+          (err, result) => {
           if (err)
             return console.error(err);
-          console.log('DB response : ', raw);
+          console.log('Cart Updated, DB response : ', result);
         });
 
         let newOrder = new Order({
@@ -39,11 +36,11 @@ export const createOrder = (req, res)=> {
           state: 'confirmed'
         });
 
-        newOrder.create((err) => {
+        newOrder.save((err) => {
           if (err)
             console.error(err);
         });
-        res.redirect('/cart', {user: user});
+        res.redirect('/');
       });
     }
     else
@@ -53,14 +50,7 @@ export const createOrder = (req, res)=> {
 export const renderCart = (req, res) => {
   if(req.signedCookies['loginId']){
     User.findById(req.signedCookies['loginId'], (err, user) => {
-      user.cart.items.forEach((itemElement) => {
-        Item.findById(itemElement.itemId, (err, item) => {
-          if(err)
-            console.error(err);
-          itemElement.name = item.name;
-          res.render('pages/cart', {cart: user.cart});
-        });
-      });
+      res.render('pages/cart', {cart: user.cart});
     });
   }
   else
