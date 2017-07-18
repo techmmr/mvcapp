@@ -26,5 +26,5 @@ export const renderAdmin = (req, res) => {
     res.render('pages/admin', {username: req.userData.username});
   }
   else
-    res.redirect('/login');
+    res.status(403).redirect('/login');
 };

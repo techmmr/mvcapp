@@ -4,6 +4,7 @@ const app = express();
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const passwordHash = require("password-hash");
+import storeUserData from './app/middlewares/assignUserToRequest';
 import { router as loginRoutes } from './app/routes/login';
 import { router as signupRoutes } from './app/routes/signup';
 import { router as homeRoutes } from './app/routes/home';
@@ -18,6 +19,8 @@ app.use(cookieParser(passwordHash.generate('secret')));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/app/views'));
 app.set('port', (process.env.PORT || 5000));
+
+app.use(storeUserData);
 
 app.use(loginRoutes);
 app.use(signupRoutes);

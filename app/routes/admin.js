@@ -20,7 +20,7 @@ const upload = multer({storage: storage});
 import * as admin from '../controllers/admin';
 import assignUserToRequest from '../controllers/assignUserToRequest'
 
-router.post('/admin', assignUserToRequest, upload.single('image'), admin.addItem);
-router.get('/admin', assignUserToRequest, admin.renderAdmin);
+router.post('/admin', upload.single('image'), admin.addItem);
+router.get('/admin', admin.renderAdmin);
 
 export {router};
