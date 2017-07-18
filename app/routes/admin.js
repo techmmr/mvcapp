@@ -18,7 +18,6 @@ const storage = multer.diskStorage({
 const upload = multer({storage: storage});
 
 import * as admin from '../controllers/admin';
-import assignUserToRequest from '../controllers/assignUserToRequest'
 
 router.post('/admin', upload.single('image'), admin.addItem);
 router.get('/admin', admin.renderAdmin);

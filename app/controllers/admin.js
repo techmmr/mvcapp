@@ -2,7 +2,7 @@ import {Item} from '../models/item';
 
 export const addItem = (req, res) => {
   if(req.signedCookies['isAdmin']) {
-    let path = req.file?req.file.path.replace('public', 'http://'+req.headers.host):'';
+    let path = req.file?req.file.path.replace('public', req.protocol+'://'+req.headers.host):'';
     let newItem = new Item({
       name      : req.body.name,
       cost      : req.body.cost,
