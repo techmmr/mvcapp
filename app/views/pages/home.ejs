@@ -19,6 +19,7 @@
             <th>Availability</th>
             <th>Vendor</th>
             <th>Add to Cart</th>
+            <th>Image</th>
         </tr>
         </thead>
         <tbody>
@@ -37,6 +38,7 @@
                     <input name="Add To Cart" id="add" value="add" type="submit" />
                 </form>
             </td>
+            <td><% if(item.imagePath){ %><img width="250" src=<%= item.imagePath %> ><%}else{%>No Image Available<%}%></td>
         </tr>
         <% }); %>
         </tbody>

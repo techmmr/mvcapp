@@ -8,6 +8,7 @@ let itemSchema = new Schema({
   cost      : { type: Number, required: true, min: 0},
   vendor    : { type: String, required: true},
   inventory : { type: Number, default: 0, min:0},
+  imagePath : String
 });
 
 let Item = db.model('Item', itemSchema);

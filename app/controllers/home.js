@@ -15,7 +15,7 @@ export const addToCart = (req, res) => {
             $set: {'cart.items': user.cart.items},
             $inc: {'cart.totalCost': Number(req.body.itemCost) * Number(req.body.quantity)}
           },
-          {new : true},
+          {new: true},
           (err, result) => {
             if (err)
               console.error(err);
@@ -38,7 +38,7 @@ export const addToCart = (req, res) => {
         $inc: {'cart.totalCost': req.body.itemCost * req.body.quantity},
         'cart.state': 'loaded'
       },
-      {new : true},
+      {new: true},
       (err, result) => {
         if (err)
           return console.error(err);
@@ -49,14 +49,26 @@ export const addToCart = (req, res) => {
 };
 
 export const renderHome = (req, res) => {
-  let userId = req.signedCookies['loginId']
-  Item.find({}, (err, items) => {
-    if (err)
-      console.error(err);
-    if (items)
-      res.render('pages/home', {
-        items: items,
-        loginId: userId
+  if (req.signedCookies['loginId'])
+    User.findById(req.signedCookies['loginId'], (err, user) => {
+      Item.find({}, (err, items) => {
+        if (err)
+          console.error(err);
+        if (items)
+          res.render('pages/home', {
+            items: items,
+            username: user.username
+          });
       });
-  });
+    });
+  else
+    Item.find({}, (err, items) => {
+      if (err)
+        console.error(err);
+      if (items)
+        res.render('pages/home', {
+          items: items,
+          username: ''
+        });
+    });
 };

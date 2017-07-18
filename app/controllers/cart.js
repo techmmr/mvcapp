@@ -10,12 +10,12 @@ export const createOrder = (req, res) => {
     Item.findByIdAndUpdate(
       item.itemId,
       {$inc: {inventory: -item.quantity}},
-      {new : true},
+      {new: true},
       (err, result) => {
-      if (err)
-        console.error(err);
-      console.log('Items Updated : ', result);
-    })
+        if (err)
+          console.error(err);
+        console.log('Items Updated : ', result);
+      })
   });
 
   //order contents are available here(in user.cart), since no transaction implementation is to be done as of now, dumping the data.
@@ -25,7 +25,7 @@ export const createOrder = (req, res) => {
         cart: {items: [], quantity: [], totalCost: 0, state: 'empty'}
       }
     },
-    {new : true},
+    {new: true},
     (err, result) => {
       if (err)
         return console.error(err);
@@ -47,7 +47,5 @@ export const createOrder = (req, res) => {
 };
 
 export const renderCart = (req, res) => {
-  User.findById(req.userData.id, (err, user) => {
-    res.render('pages/cart', {cart: user.cart});
-  });
+  res.render('pages/cart', {cart: req.userData.cart, username: req.userData.username});
 };

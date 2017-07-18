@@ -1,20 +1,26 @@
 const express = require('express');
 const router = express.Router();
-// const multer = require('multer');
-// const storage = multer.diskStorage({
-//   destination: (req, file, callback) => {
-//     callback(null, "../../public/images");
-//   },
-//   filename: (req, file, callback) => {
-//     callback(null, file.fieldname + "-" + Date.now());
-//   }
-// });
-// const upload = multer({storage: storage});
+const multer = require('multer');
+const storage = multer.diskStorage({
+  destination: (req, file, callback) => {
+    callback(null, "./public/images");
+  },
+  filename: (req, file, callback) => {
+    callback(null, file.fieldname + "-" + Date.now());
+  },
+  onFileUploadStart:  (file) => {
+    console.log(file.originalname + ' is starting ...');
+  },
+  onFileUploadComplete: (file) => {
+    console.log(file.fieldname + ' uploaded to  ' + file.path);
+  }
+});
+const upload = multer({storage: storage});
 
 import * as admin from '../controllers/admin';
 import assignUserToRequest from '../controllers/assignUserToRequest'
 
-router.post('/admin', assignUserToRequest, admin.addItem);
+router.post('/admin', assignUserToRequest, upload.single('image'), admin.addItem);
 router.get('/admin', assignUserToRequest, admin.renderAdmin);
 
 export {router};
