@@ -5,7 +5,6 @@ import {Order} from '../models/order';
 export const createOrder = (req, res) => {
   let user = req.userData;
 
-  //remove items from inventory
   user.cart.items.forEach((item) => {
     Item.findByIdAndUpdate(
       item.itemId,
@@ -48,4 +47,24 @@ export const createOrder = (req, res) => {
 
 export const renderCart = (req, res) => {
   res.render('pages/cart', {cart: req.userData.cart, username: req.userData.username});
+};
+
+export const removeItem = (req, res) => {
+  Item.findById(req.body.itemId, (err, item) => {
+    if (err)
+      console.err(err);
+    User.findByIdAndUpdate(req.userData.id, {
+        $pull: {
+          'cart.items': {itemId: req.body.itemId}
+        },
+        $inc: {'cart.totalCost': -Number(item.cost) * Number(req.body.itemQuantity)}
+      },
+      {new: true},
+      (err, result) => {
+        if (err)
+          return console.error(err);
+        console.log('Cart Updated : ', result);
+        res.status(200).redirect('/cart');
+      });
+  });
 };

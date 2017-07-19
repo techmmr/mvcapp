@@ -16,6 +16,7 @@
         <tr>
             <th>Item Name</th>
             <th>Quantity</th>
+            <th>Remove</th>
         </tr>
         </thead>
         <tbody>
@@ -23,6 +24,13 @@
         <tr>
             <td><%= item.name %></td>
             <td><%= item.quantity %></td>
+            <td>
+                <form action="/cart/removeItem" method="post">
+                    <input type="hidden" name="itemId" value=<%= item.itemId %> >
+                    <input type="hidden" name="itemQuantity" value=<%= item.quantity %> >
+                    <input name="removeItem" value="Remove" type="submit" />
+                </form>
+            </td>
         </tr>
         <% }); %>
         <br>
@@ -32,8 +40,8 @@
         </tr>
         </tbody>
     </table>
-    <form method="post">
-        <input name="createOrder" id="createOrder" value="Create Order" type="submit" />
+    <form action="/cart/createOrder" method="post">
+        <input name="createOrder" value="Create Order" type="submit" />
     </form>
 </main>
 

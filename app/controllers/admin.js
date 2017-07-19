@@ -1,7 +1,7 @@
 import {Item} from '../models/item';
 
 export const addItem = (req, res) => {
-  let path = req.file ? req.file.path.replace('public', 'https://' + req.headers.host) : '';
+  let path = req.file ? req.file.path.replace('public', ''):'';
   let newItem = new Item({
     name: req.body.name,
     cost: req.body.cost,
