@@ -1,7 +1,10 @@
 <div class="page-header">
     <h4 style="margin-left: 950px;">
         <% if(username){ %>
-        <div style="color: #527ab7">Welcome <%= username %></div>
+        <div style="color: #527ab7">
+            Welcome, <%= username %><br>
+            <a href="/logout">Log Out</a>
+        </div>
         <% }else{ %>
         <a href="/login">Login</a>&emsp;&emsp;
         <a href="/signup">Signup</a>

@@ -10,6 +10,7 @@ import { router as signupRoutes } from './app/routes/signup';
 import { router as homeRoutes } from './app/routes/home';
 import { router as cartRoutes } from './app/routes/cart';
 import { router as adminRoutes } from './app/routes/admin';
+import { router as logoutRoutes } from './app/routes/logout';
 
 app.use(express.static(path.join(__dirname, '/public')));
 app.use(bodyParser.json());
@@ -23,6 +24,7 @@ app.set('port', (process.env.PORT || 5000));
 app.use(storeUserData);
 
 app.use(loginRoutes);
+app.use(logoutRoutes);
 app.use(signupRoutes);
 app.use(homeRoutes);
 app.use(cartRoutes);
