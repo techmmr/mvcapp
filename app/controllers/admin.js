@@ -2,7 +2,7 @@ import {Item} from '../models/item';
 
 export const addItem = (req, res) => {
   if(req.signedCookies['isAdmin']) {
-    let path = req.file?req.file.path.replace('public', req.protocol+'://'+req.headers.host):'';
+    let path = req.file?req.file.path.replace('public', 'https://'+req.headers.host):'';
     let newItem = new Item({
       name      : req.body.name,
       cost      : req.body.cost,
@@ -17,14 +17,16 @@ export const addItem = (req, res) => {
     console.log('new item created :', req.body.name);
     res.redirect('/');
   }
-  else
-    res.redirect('/login');
+  else{
+    res.status(403).redirect('Not Authorized : Please login as Admin.<br><a href="/login">Login</a>');
+  }
 };
 
 export const renderAdmin = (req, res) => {
   if(req.signedCookies['isAdmin']) {
     res.render('pages/admin', {username: req.userData.username});
   }
-  else
-    res.status(403).redirect('/login');
+  else{
+    res.status(403).redirect('Not Authorized : Please login as Admin.<br><a href="/login">Login</a>');
+  }
 };

@@ -14,13 +14,11 @@ export const login = (req, res) => {
         res.status(200).redirect('/');
       }
       else{
-        console.error('Wrong Password');
-        res.redirect('/login');
+        res.status(401).send('Wrong Password.<br><a href="/login">Login</a>');
       }
     }
     else {
-      console.error('Username is not registered with our site');
-      res.redirect('/login');
+      res.status(401).redirect('Username is not registered. <br><a href="/signup">Signup</a>');
     }
   });
 };

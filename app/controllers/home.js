@@ -54,21 +54,21 @@ export const renderHome = (req, res) => {
       Item.find({}, (err, items) => {
         if (err)
           console.error(err);
-        if (items)
-          res.render('pages/home', {
-            items: items,
-            username: user.username
-          });
+
+        res.render('pages/home', {
+          items: items,
+          username: user.username
+        });
       });
     });
   else
     Item.find({}, (err, items) => {
       if (err)
         console.error(err);
-      if (items)
-        res.render('pages/home', {
-          items: items,
-          username: ''
-        });
+
+      res.render('pages/home', {
+        items: items,
+        username: ''
+      });
     });
 };

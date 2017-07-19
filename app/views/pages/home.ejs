@@ -35,10 +35,10 @@
                     <input type="hidden" name="itemCost" value=<%= item.cost %> >
                     <input type="hidden" name="itemName" value=<%= item.name %> >
                     <input type="number" name="quantity">
-                    <input name="Add To Cart" id="add" value="add" type="submit" />
+                    <input name="addToCart" value="Add To Cart" type="submit">
                 </form>
             </td>
-            <td><% if(item.imagePath){ %><img width="250" src=<%= item.imagePath %> ><%}else{%>No Image Available<%}%></td>
+            <td><% if(item.imagePath){ %><img width="200" height="200" src=<%= item.imagePath %> ><%}else{%>No Image Available<%}%></td>
         </tr>
         <% }); %>
         </tbody>
