@@ -18,7 +18,7 @@ export const login = (req, res) => {
       }
     }
     else {
-      res.status(401).redirect('Username is not registered. <br><a href="/signup">Signup</a>');
+      res.status(401).send('Username is not registered. <br><a href="/signup">Signup</a><br><a href="/login">Login</a>');
     }
   });
 };

@@ -6,6 +6,7 @@ export const signup = (req, res)=> {
     name        : req.body.name,
     address     : req.body.address,
     username    : req.body.username,
+    email       : req.body.email,
     password    : passwordHash.generate(req.body.password),
     cart        : {
       items     : [],
@@ -14,9 +15,12 @@ export const signup = (req, res)=> {
     }
   });
   newUser.save((err) => {
-    if(err)
+    if(err) {
+      res.status(400).send('Invalid signup request.Please try again.<br><a href="/signup">Signup</a>');
       return console.error(err);
-    console.log('new user created :' + req.body.name);
+    }
+    else
+      console.log('new user created :' + req.body.name);
   });
   res.redirect('/');
 };
