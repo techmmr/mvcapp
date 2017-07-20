@@ -12,18 +12,32 @@
 <main>
     <h2>Signup</h2>
     <form method="post">
-        Full Name:  <input type="text" name="name"><br>
-        Username :  <input type="text" name="username"><br>
-        Password :  <input type="password" name="password"><br>
-        Address  :  <input type="text" name="address"><br>
-        Email    :  <input type="email" name="email"><br>
-        <input type="submit" value="Sign up" name="submit">
+        *fields are required. Password has to have more than 8 characters.<br>
+        Full Name*:  <input type="text" name="name" required><br>
+        Username* :  <input type="text" name="username" required><br>
+        Password* :  <input id="password" type="password" name="password" required><br>
+        Address*  :  <input type="text" name="address" required><br>
+        Email*    :  <input type="email" name="email" required><br>
+        <input id="submit" type="submit" value="Sign up" name="submit" disabled>
     </form>
 </main>
 
 <footer>
   <% include ../partials/footer.ejs %>
 </footer>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+      $('#password').on('input', function() {
+        var passwordLength = $(this).val().length;
+        if(passwordLength >= 8)
+          $('#submit').prop("disabled", false);
+        else
+          $('#submit').prop("disabled", true);
+      });
+    });
+</script>
 
 </body>
 </html>

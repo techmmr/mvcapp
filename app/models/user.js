@@ -4,10 +4,10 @@ import db from '../configurations/dbConfig';
 
 let Schema = mongoose.Schema;
 let userSchema = new Schema({
-  name        : { type: String, required: true},
-  address     : { type: String, required: true},
-  email       : { type: String, required: true, unique: true},
-  username    : { type: String, required: true, unique: true},
+  name        : { type: String, required: true, maxlength: 20},
+  address     : { type: String, required: true, maxlength: 100},
+  email       : { type: String, required: true, unique: true, maxlength: 30},
+  username    : { type: String, required: true, unique: true, match: /^[a-zA-Z0-9]+$/, maxlength: 20},
   password    : { type: String, required: true},
   admin       : { type: Boolean, default: false},
   cart        : {
