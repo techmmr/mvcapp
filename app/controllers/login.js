@@ -24,5 +24,5 @@ export const login = (req, res) => {
 };
 
 export const renderLogin = (req, res) => {
-  res.render('pages/login', {username: ''});
+  res.render('pages/login', {user: {}});
 };

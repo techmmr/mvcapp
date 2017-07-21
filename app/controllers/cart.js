@@ -28,7 +28,7 @@ export const createOrder = (req, res) => {
     (err, result) => {
       if (err)
         return console.error(err);
-      console.log('Cart Updated : ', result);
+      console.log('Cart Updated : ', result.cart);
     });
 
   let newOrder = new Order({
@@ -46,7 +46,7 @@ export const createOrder = (req, res) => {
 };
 
 export const renderCart = (req, res) => {
-  res.render('pages/cart', {cart: req.userData.cart, username: req.userData.username});
+  res.render('pages/cart', {cart: req.userData.cart, user: req.userData});
 };
 
 export const removeItem = (req, res) => {
@@ -63,7 +63,7 @@ export const removeItem = (req, res) => {
       (err, result) => {
         if (err)
           return console.error(err);
-        console.log('Cart Updated : ', result);
+        console.log('Cart Updated : ', result.cart);
         res.status(200).redirect('/cart');
       });
   });

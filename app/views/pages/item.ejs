@@ -21,8 +21,6 @@
         Inventory : <%= item.inventory%><br>
         <form method="post">
             <input type="hidden" name="itemId" value=<%= item.id %> >
-            <input type="hidden" name="itemCost" value=<%= item.cost %> >
-            <input type="hidden" name="itemName" value=<%= item.name %> >
             <input type="number" name="quantity">
             <input name="addToCart" value="Add To Cart" type="submit">
         </form>

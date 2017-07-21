@@ -10,7 +10,7 @@ export const renderHome = (req, res) => {
 
         res.render('pages/home', {
           items: items,
-          username: user.username
+          user: user
         });
       });
     });
@@ -21,7 +21,7 @@ export const renderHome = (req, res) => {
 
       res.render('pages/home', {
         items: items,
-        username: ''
+        user: {}
       });
     });
 };

@@ -1,10 +1,15 @@
 import {Item} from '../models/item';
 const sizeOf = require('image-size');
 
+const IMAGE_MAX_SIZE = 5000000;
+const IMAGE_MAX_HEIGHT = 2000;
+const IMAGE_MAX_WIDTH = 3000;
+
+
 export const addItem = (req, res) => {
   let path = req.file ? req.file.path.replace('public', '') : '';
   let dimensions = sizeOf('./public' + path);
-  if (dimensions.height <= 2000 && dimensions.width <= 3000 && req.file.size <= 5000000) {
+  if (dimensions.height <= IMAGE_MAX_HEIGHT && dimensions.width <= IMAGE_MAX_WIDTH && req.file.size <= IMAGE_MAX_SIZE) {
     let newItem = new Item({
       name: req.body.name,
       cost: req.body.cost,
@@ -15,8 +20,8 @@ export const addItem = (req, res) => {
     newItem.save((err) => {
       if (err)
         return console.error(err);
+      console.log('Item created :', req.body.name);
     });
-    console.log('Item created :', req.body.name);
     res.redirect('/');
   }
   else
@@ -29,17 +34,20 @@ export const renderAdmin = (req, res) => {
       console.error(err);
 
     res.render('pages/admin', {
-      username: req.userData.username,
+      user: req.userData,
       items: items
     });
   });
 };
 
 export const removeItem = (req, res) => {
-  Item.findByIdAndRemove(req.body.itemId, (err, item) => {
-    if (err)
-      console.error(err);
-    console.log('Item Removed :', item.name);
-    res.redirect('/');
-  });
+  if (req.body.itemId)
+    Item.findByIdAndRemove(req.body.itemId, (err, item) => {
+      if (err)
+        console.error(err);
+      console.log('Item Removed :', item.name);
+      res.status(200).redirect('/');
+    });
+  else
+    res.status(400).send('No item to remove.');
 };
