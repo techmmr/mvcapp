@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <% include ./../partials/head.ejs %>
+</head>
+<body class="container">
+
+<header>
+  <% include ../partials/header.ejs %>
+</header>
+
+<main>
+    <h2>Item</h2>
+    <hr>
+    <% if(item.imagePath){ %><img src=<%= item.imagePath %> ><%}else{%>No Image Available<%}%>
+    <hr>
+    <p>
+        Name : <%= item.name%><br>
+        Cost : <%= item.cost%><br>
+        Vendor : <%= item.vendor%><br>
+        Inventory : <%= item.inventory%><br>
+        <form method="post">
+            <input type="hidden" name="itemId" value=<%= item.id %> >
+            <input type="hidden" name="itemCost" value=<%= item.cost %> >
+            <input type="hidden" name="itemName" value=<%= item.name %> >
+            <input type="number" name="quantity">
+            <input name="addToCart" value="Add To Cart" type="submit">
+        </form>
+    </p>
+</main>
+
+<footer>
+  <% include ../partials/footer.ejs %>
+</footer>
+
+</body>
+</html>

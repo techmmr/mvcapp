@@ -16,9 +16,6 @@
         <tr>
             <th>Name</th>
             <th>Cost</th>
-            <th>Availability</th>
-            <th>Vendor</th>
-            <th>Add to Cart</th>
             <th>Image</th>
         </tr>
         </thead>
@@ -27,18 +24,8 @@
         <tr>
             <td><%= item.name %></td>
             <td><%= item.cost %></td>
-            <td><%= item.inventory %></td>
-            <td><%= item.vendor %></td>
-            <td>
-                <form method="post">
-                    <input type="hidden" name="itemId" value=<%= item.id %> >
-                    <input type="hidden" name="itemCost" value=<%= item.cost %> >
-                    <input type="hidden" name="itemName" value=<%= item.name %> >
-                    <input type="number" name="quantity">
-                    <input name="addToCart" value="Add To Cart" type="submit">
-                </form>
-            </td>
-            <td><% if(item.imagePath){ %><img width="200" height="200" src=<%= item.imagePath %> ><%}else{%>No Image Available<%}%></td>
+            <td><% if(item.imagePath){ %><img height="200" src=<%= item.imagePath %> ><%}else{%>No Image Available<%}%></td>
+            <td><a href=<%= '/item/'+item.id%>>Item Details</a></td>
         </tr>
         <% }); %>
         </tbody>

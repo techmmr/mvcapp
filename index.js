@@ -11,6 +11,7 @@ import { router as homeRoutes } from './app/routes/home';
 import { router as cartRoutes } from './app/routes/cart';
 import { router as adminRoutes } from './app/routes/admin';
 import { router as logoutRoutes } from './app/routes/logout';
+import { router as itemRoutes } from './app/routes/item';
 
 app.use(express.static(path.join(__dirname, '/public')));
 app.use(bodyParser.json());
@@ -24,11 +25,12 @@ app.set('port', (process.env.PORT || 5000));
 app.use(storeUserData);
 
 app.use(loginRoutes);
-app.use(logoutRoutes);
 app.use(signupRoutes);
 app.use(homeRoutes);
 app.use(cartRoutes);
 app.use(adminRoutes);
+app.use(itemRoutes);
+app.use(logoutRoutes);
 
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));

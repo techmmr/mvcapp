@@ -1,7 +1,7 @@
 import {User} from '../models/user';
 
 export default (req, res, next) => {
-  if(req.url === '/login' || req.url === '/logout' || req.url === '/signup' || (req.url === '/' && req.method === 'GET'))
+  if(req.url === '/login' || req.url === '/logout' || req.url === '/signup' || req.url === '/' || (/^\/item/.test(req.url) && req.method === 'GET'))
     next();
   else {
     let userId = req.signedCookies['loginId'];
